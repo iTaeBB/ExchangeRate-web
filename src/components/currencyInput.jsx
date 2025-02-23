@@ -30,13 +30,13 @@ const CurrencyInput = ({ currenciesList, currency, onCurrencyChange, onChange, v
     }, [currenciesList]);
 
     return (
-        <div className="flex space-y-2 w-full border border-gray-300">
+        <div className="flex space-y-2 w-full border border-gray-300 justify-center items-center">
             <input 
                 type="number"
                 value={value}
                 readOnly={raedOnly}
                 onChange={handleChangeValue} 
-                className="w-[60%]"
+                className="w-[60%] pl-0.5"
             />
             <Select 
                 value={options.find(option => option.value === currency)}

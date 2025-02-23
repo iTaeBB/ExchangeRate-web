@@ -8,7 +8,7 @@ function App() {
   const [currenciesList, setCurrenciesList] = useState([])
   const [fromCurrency, setFromCurrency] = useState('USD')  
   const [toCurrency, setToCurrency] = useState('THB')
-  const [amount, setAmount] = useState(0)
+  const [amount, setAmount] = useState(1)
   const [loading, setLoading] = useState(false)
   const [targetExchangeRate, setTargetExchangeRate] = useState(0)
 
@@ -58,7 +58,7 @@ function App() {
           <div className="text-orange-500 bg-orange-300 rounded-4xl p-2">
             <p>1 {fromCurrency} = {targetExchangeRate} {toCurrency}</p>
           </div>
-          <button className='text-white bg-orange-500 flex gap-1 rounded-4xl p-2' onClick={getExchangeRate} disabled={loading}>
+          <button className='text-white bg-orange-500 flex gap-1 rounded-4xl p-2 disabled:opacity-70' onClick={getExchangeRate} disabled={loading}>
             <RefreshIcon spin={loading} />
             <span>Update Rate</span>
           </button>
