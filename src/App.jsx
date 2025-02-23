@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import Button from './components/button'
 import CurrencyInput from './components/currencyInput'
 import currencyApi from './services/currencyApi'
 import {RefreshIcon} from './components/icon/refeshIcon'
@@ -16,7 +15,7 @@ function App() {
   const getExchangeRate = async () => {
     try {
       setLoading(true)
-      const resp = currencyApi.getExchangeRate(fromCurrency, toCurrency)
+      const resp = await currencyApi.getExchangeRate(fromCurrency, toCurrency)
       if (resp) {
         setTargetExchangeRate( resp.rate )
       }
@@ -30,7 +29,7 @@ function App() {
 
   const getCurrencyCodes = async () => {
     try {
-      const resp = currencyApi.getCurrencyCodes()
+      const resp = await currencyApi.getCurrencyCodes()
       if (resp) {
         setCurrenciesList( resp.currencies || [] )
       }
@@ -51,23 +50,23 @@ function App() {
 
   return (
     <>
-      <div className="w-full max-w-xl mx-auto border border-[#474747] rounded-2xl">
-        <div className="w-full border-b border-[#474747]">
-          Currency Converter
+      <div className="w-full max-w-2xl mx-auto border border-[#474747] rounded-2xl">
+        <div className="w-full border-b border-[#474747] p-2 text-start font-bold text-xl">
+          <h1>Currency Converter</h1>
         </div>
-        <div className="w-full flex">
-        <div className="text-orange-500 bg-orange-300 p-1 rounded-4xl">
-          1 {fromCurrency} = {targetExchangeRate} {toCurrency}
+        <div className="w-full flex p-2 gap-2">
+          <div className="text-orange-500 bg-orange-300 rounded-4xl p-2">
+            <p>1 {fromCurrency} = {targetExchangeRate} {toCurrency}</p>
+          </div>
+          <button className='text-white bg-orange-500 flex gap-1 rounded-4xl p-2' onClick={getExchangeRate} disabled={loading}>
+            <RefreshIcon spin={loading} />
+            <span>Update Rate</span>
+          </button>
         </div>
-        <Button loading={loading} onClick={getExchangeRate}>
-          <RefreshIcon spin={false} />
-          Update Rate
-        </Button>
-        </div>
-        <div className="w-full flex">
-          <CurrencyInput value={amount} onChange={setAmount} onCurrencyChange={(currency) => setFromCurrency(currency)} currenciesList={currenciesList}/>
-          <Button>Convert</Button>
-          <CurrencyInput value={amount * targetExchangeRate} raedOnly onCurrencyChange={(currency) => setToCurrency(currency)} currenciesList={currenciesList} />
+        <div className="w-full flex p-2 gap-1">
+          <CurrencyInput value={amount} currency={fromCurrency} onChange={setAmount} onCurrencyChange={(currency) => setFromCurrency(currency)} currenciesList={currenciesList}/>
+          Convert
+          <CurrencyInput value={amount * targetExchangeRate} currency={toCurrency} raedOnly onCurrencyChange={(currency) => setToCurrency(currency)} currenciesList={currenciesList} />
         </div>
       </div>
     </>

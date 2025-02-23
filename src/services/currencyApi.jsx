@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://e273-2001-fb1-9b-a30d-4837-c0d8-f0b5-bec1.ngrok-free.app/api';
+const API_BASE_URL = '';
 
 function createCurrencyHttpClient() {
     const instance = axios.create({
@@ -44,7 +44,7 @@ class currencyApi {
 
     async getExchangeRate(base, target) {
         try {
-            const response = await this.client.get(`${API_BASE_URL}/exchange/${base}/${target}`);
+            const response = await this.client.get(`${API_BASE_URL}api/exchange/${base}/${target}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching exchange rate:', error);
@@ -54,7 +54,7 @@ class currencyApi {
 
     async getCurrencyCodes() {
         try {
-            const response = await this.client.get(`${API_BASE_URL}/currency-codes`);
+            const response = await this.client.get(`${API_BASE_URL}api/currency-codes`);
             return response.data;
         } catch (error) {
             console.error('Error fetching currency codes:', error);
